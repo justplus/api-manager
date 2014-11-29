@@ -15,9 +15,7 @@ API文档管理工具：
 pip install requests, Flask, Flask-SQLAlchemy, Flask-Script
 ```
 
-- 修改数据库配置
-
-见config.py
+- 修改数据库配置config.py
 
 - 运行manage.py初始化数据库
 
