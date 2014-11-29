@@ -1,0 +1,122 @@
+{% extends "base.html" %}
+{% block head %}
+    {{ super() }}
+{% endblock %}
+{% block content %}
+    <div class="header view-header legal">
+        <a href="/admin">后台管理</a>>新增接口
+    </div>
+
+    <div class="pure-u-1 view pure-form">
+        <span class="key">接口名称</span>
+        <span class="value">
+            <input id="add-name-l" style="width:100%;" type="text" placeholder="如core.user.get">
+        </span>
+
+        <span class="key">接口描述</span>
+        <span class="value">
+            <input id="add-description-l" style="width:100%;" type="text">
+        </span>
+
+        <span class="key">接口类别</span>
+        <span class="value">
+            <select id="add-category-l">
+                {% for category in locals.category_list %}
+                    <option value="{{ category.id }}">
+                        {{ category.category_name }}
+                    </option>
+                {% endfor %}
+            </select>
+        </span>
+
+        <span class="key">支持格式</span>
+        <span class="value">
+            <input id="json" type="checkbox" checked="checked"> <label for="json" style="width:auto;margin-right:10px;">JSON</label>
+            <input id="xml" type="checkbox" checked="checked"> <label for="xml" style="width:auto;">XML</label>
+        </span>
+
+        <span class="key">HTTP请求方式</span>
+        <span class="value">
+            <input id="get" type="checkbox" checked="checked"> <label for="get" style="width:auto;margin-right:10px;">GET</label>
+            <input id="post" type="checkbox" checked="checked"> <label for="post" style="width:auto;">POST</label>
+        </span>
+
+        <span class="key">是否需要授权</span>
+        <span class="value">
+            <input id="add-auth-l" type="checkbox" checked="checked"> <label for="auth" style="width:auto;margin-right:10px;">是</label>
+        </span>
+
+        <div id="add_param_box" style="display:none;width:650px;">
+        <form class="pure-form pure-form-aligned pure-u-1">
+            <fieldset>
+                <div class="pure-control-group">
+                    <label for="add_name">字段名称</label>
+                    <input id="add_name" type="text" placeholder="请输入字段名称" style="width: 300px;">
+                </div>
+
+                <div class="pure-control-group">
+                    <label>必选字段</label>
+                    <input id="add_must" type="checkbox" checked="checked"><label for="add_must" style="width:auto;margin-right:10px;">是</label>
+                </div>
+
+                <div class="pure-control-group">
+                    <label for="add_type">字段类型</label>
+                    <input id="add_type" type="text" placeholder="请输入字段类型" style="width: 300px;">
+                </div>
+
+                <div class="pure-control-group">
+                    <label for="add_default">默认值</label>
+                    <input id="add_default" type="text" style="width: 300px;">
+                </div>
+
+                <div class="pure-control-group">
+                    <label for="add_description">字段说明</label>
+                    <input id="add_description" type="text" placeholder="请输入详细的说明" style="width: 400px;">
+                </div>
+
+                <div style="margin-left: 250px; margin-top:20px;">
+                    <a id="add_param_btn" class="pure-button pure-button-primary" href="javascript:void(0)" onclick="$.fancybox.close();">确定</a>
+                </div>
+            </fieldset>
+        </form>
+        </div>
+
+        <span class="key">请求参数 <a href="#add_param_box" id="various1">+</a></span>
+        <span class="value">
+            <table class="param-list pure-u-1 view" cellpadding="0" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>字段</th>
+                        <th>必选</th>
+                        <th>类型</th>
+                        <th>默认值</th>
+                        <th class="view-description">说明</th>
+                    </tr>
+                </thead>
+                <tbody id="add_tmp_params">
+
+                </tbody>
+            </table>
+        </span>
+
+        <span class="key">返回结果</span>
+        <span class="value">
+            <textarea id="hidden-api-result-2" class="pure-u-1" style="height:100px;"></textarea>
+            <span class="pure-u-2-5"></span>
+            <a href="javascript:void(0)" onclick="preview_json_1()">点击预览</a>
+            <pre class="api-result-2 renderjson" style="display:none"></pre>
+        </span>
+
+        <span class="key">注意事项</span>
+        <span class="value">
+            <textarea class="pure-u-1" id="add-notice-l" style="height:100px;" placeholder="支持html,换行使用<br/>"></textarea>
+        </span>
+
+        <span class="value">
+            <span class="pure-u-2-5"></span>
+            <button onclick="add_api()" class="pure-button pure-button-primary">提交</button>
+        </span>
+
+    </div>
+    <script src="{{ url_for('static', filename='script/admin.js') }}"></script>
+{% endblock %}

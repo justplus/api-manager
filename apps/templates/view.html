@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+{% block head %}
+    {{ super() }}
+{% endblock %}
+{% block content %}
+    <div class="header view-header legal">
+        <a href="/">畅言云API文档</a>
+        >
+        <a href="/#{{ locals.category }}">{{ locals.category }}</a>
+        >
+        {{ locals.api.api_name }}
+    </div>
+    <div class="pure-u-1 view">
+        <span class="key">接口描述</span>
+        <span class="value">{{ locals.api.api_description }}</span>
+
+        <span class="key">支持格式</span>
+        <span class="value">
+            {% if 'JSON' in locals.api.api_format %}
+            <span class="method-get">JSON</span>
+            {%  endif %}
+            {% if 'XML' in locals.api.api_format %}
+            <span class="method-post">XML</span>
+            {% endif %}
+        </span>
+
+        <span class="key">HTTP请求方式</span>
+        <span class="value">
+            {% if 'GET' in locals.api.api_method %}
+            <span class="method-get">GET</span>
+            {%  endif %}
+            {% if 'POST' in locals.api.api_method %}
+            <span class="method-post">POST</span>
+            {% endif %}
+        </span>
+
+        <span class="key">是否需要授权</span>
+        <span class="value">
+            {% if locals.api.api_auth==1 %}是
+            {% else %}否
+            {% endif %}
+        </span>
+
+        <span class="key">请求参数</span>
+        <span class="value">
+            <table class="param-list pure-u-1" cellpadding="0" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th class="td1">字段</th>
+                        <th class="td1">必选</th>
+                        <th class="td1">类型</th>
+                        <th class="td1">默认值</th>
+                        <th class="td5 view-description">说明</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for param in locals.api.api_params %}
+
+                        <tr {% if param.param_must %}style="background: none repeat scroll 0% 0% #F3F4F5;"{% endif %}>
+                            <td class="td1">{{ param.param_name }}</td>
+                            <td class="td1">{{ param.param_must }}</td>
+                            <td class="td1">{{ param.param_type }}</td>
+                            <td class="td1">{{ param.param_default or '无'}}</td>
+                            <td class="td5">{{ param.param_description }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </span>
+
+        <span class="key">返回结果</span>
+        <span class="value">
+            <span style="display:none" id="hidden-api-result">{{ locals.api.api_return }}</span>
+            <pre class="api-result renderjson"></pre>
+        </span>
+
+        <span class="key">注意事项</span>
+        <span class="value">
+            {{ locals.api.api_notice|safe  or '无'}}
+        </span>
+
+        <span class="key">更新日志</span>
+        <span class="value">
+        {% if locals.api.api_changelog %}
+        {% for changelog in locals.api.api_changelog %}
+            <img style="display:inline-block;" src="{{ url_for('static', filename='images/datetime.png') }}" width="14" height="14"/>
+            {% if loop.index == 1 %}
+                <span class="log-time" style="color:red;">{{ changelog.update_time }}</span>
+                <span class="log" style="color:red;">{{ changelog.log }}</span>
+            {% else %}
+                <span class="log-time">{{ changelog.update_time }}</span>
+                <span class="log">{{ changelog.log }}</span>
+            {% endif %}
+        {% endfor %}
+        {% else %}首次创建
+        {% endif %}
+        </span>
+
+        <span class="key">接口测试</span>
+        <span class="value">
+            <form class="pure-form">
+                <select id="test-format">
+                    <option>GET</option>
+                    <option>POST</option>
+                </select>
+                <input id="test-param" class="pure-input-2-3" type="text" value="{{ locals.api.api_test }}">
+                <a id="api-request" class="pure-button pure-button-small pure-button-primary">请求</a>
+            </form>
+            <pre class="test-result renderjson">暂无请求</pre>
+        </span>
+    </div>
+    <script src="{{ url_for('static', filename='script/api.js') }}"></script>
+{% endblock %}

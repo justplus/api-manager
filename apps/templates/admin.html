@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block head %}
+    {{ super() }}
+{% endblock %}
+{% block content %}
+    <div id="del_box" style="display:none;width:250px;">
+        <form class="pure-form" style="text-align:center;">
+            <p>确定删除接口？</p>
+            <a id="del-btn" onclick="$.fancybox.close();" class="pure-button pure-button-xsmall pure-button-error" style="color:#fff;">确定</a>
+        </form>
+    </div>
+    <div class="pure-u-1">
+        {% for api_category in  locals.api_list %}
+        <table id="#{{ api_category.category }}" class="pure-table pure-table-bordered api-list">
+            <tbody>
+                <tr class="header">
+                    <td colspan="4">
+                        {{ api_category.category }}
+                    </td>
+                </tr>
+                {% for api in api_category.apis %}
+                <tr class="list">
+                    <td class="td2">
+                        {% if 'GET' in api.api_method %}
+                        <span class="method-get">GET</span>
+                        {%  endif %}
+                        {% if 'POST' in api.api_method %}
+                        <span class="method-post">POST</span>
+                        {% endif %}
+                    </td>
+                    <td class="td3"><a href="/{{ api.id }}">{{ api.api_name }}</a></td>
+                    <td class="td4">{{ api.api_description }}</td>
+                    <td class="td1">
+                        <a class="pure-button pure-button-xsmall pure-button-success" href="/admin/edit/{{ api.id }}" style="color:#fff;">编辑</a>
+                        <!--<a class="pure-button pure-button-xsmall pure-button-error" href="/admin/delete/{{ api.id }}" style="color:#fff;">删除</a>-->
+                        <span id="pre-del" style="display:none;"></span>
+                        <a onclick="p_del({{ api.id }})" class="pure-button pure-button-xsmall pure-button-error" style="color:#fff;" href="#del_box" id="various3">删除</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% endfor %}
+    </div>
+    <script src="{{ url_for('static', filename='script/admin.js') }}"></script>
+{% endblock %}

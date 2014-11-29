@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block head %}
+    {{ super() }}
+{% endblock %}
+{% block content %}
+    <form class="pure-form pure-form-aligned" style="margin:200px auto 250px auto;text-align:center;">
+        <fieldset>
+            <div class="pure-control-group">
+                <label for="name">用户名</label>
+                <input id="name" type="text" class="pure-u-1-4" placeholder="请输入用户名">
+            </div>
+
+            <div class="pure-control-group">
+                <label for="password">密码</label>
+                <input id="password" type="password" class="pure-u-1-4" placeholder="请输入密码">
+            </div>
+
+            <div class="pure-controls">
+                <a id="login-btn" style="position: relative;left:-20px;" class="pure-button pure-button-small pure-button-success">登录</a>
+            </div>
+        </fieldset>
+    </form>
+    <script src="{{ url_for('static', filename='script/index.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block head %}
+    {{ super() }}
+{% endblock %}
+{% block content %}
+    <div class="hero">
+        <div class="hero-title">
+            <h3>畅言云接口文档</h3>
+            <div class="pure-u-1">
+                <form class="pure-form">
+                    <input id="search-kw" class="pure-input-1-3" type="text" placeholder="接口名称或描述">
+                    <a id="search-btn" class="pure-button pure-button-small pure-button-primary">搜索</a>
+                </form>
+            </div>
+            <div id="search-result" class="pure-u-1">
+                {% for api_category in  locals.api_list %}
+                <table id="{{ api_category.category }}" class="pure-table pure-table-bordered api-list">
+                    <tbody>
+                        <tr class="header">
+                            <td colspan="4">
+                                {{ api_category.category }}
+                            </td>
+                        </tr>
+                        {% for api in api_category.apis %}
+                        <tr class="list">
+                            <td class="td2">
+                                {% if 'GET' in api.api_method %}
+                                <span class="method-get">GET</span>
+                                {%  endif %}
+                                {% if 'POST' in api.api_method %}
+                                <span class="method-post">POST</span>
+                                {% endif %}
+                            </td>
+                            <td class="td3"><a href="/{{ api.id }}">{{ api.api_name }}</a></td>
+                            <td class="td4">{{ api.api_description }}</td>
+                            <td class="td1"><button class="pure-button pure-button-xsmall pure-button-success">关注</button></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <script src="{{ url_for('static', filename='script/index.js') }}"></script>
+{% endblock %}
