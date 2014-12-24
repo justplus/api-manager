@@ -5,16 +5,16 @@ __email__ = 'zhaoliang@iflytek.com'
 __created__ = '2014/10/12'
 from flask import Flask, Blueprint
 from flask import render_template, abort, request, redirect, url_for
-from apps.model.api import Api, Category, Param, Changelog
+from apps.model.api import Api, Category, Param, Changelog, User
 from datetime import *
 from apps import db, ext
-from apps.ext.login import require_login
+from apps.ext.login import require_login, require_admin
 import json
 
 bp = Blueprint('admin', __name__)
 
 @bp.route('/')
-@require_login()
+@require_admin()
 def index():
     category_list = Category.query.order_by(Category.id).all()
     api_list = []
@@ -27,7 +27,7 @@ def index():
     return render_template('admin.html', locals=locals())
 
 @bp.route('/add', methods=['GET', 'POST'])
-@require_login()
+@require_admin()
 def add():
     if request.method == 'GET':
         category_list = Category.query.all()
@@ -42,7 +42,8 @@ def add():
             api_auth=1 if str(request.form['auth']).lower() == 'true' else 0,
             api_notice=request.form['notice'],
             api_return=request.form['return'],
-            api_category=request.form['category']
+            api_category=request.form['category'],
+            api_test=request.form['test']
         )
 
         for p in params:
@@ -65,7 +66,7 @@ def add():
         return "ok"
 
 @bp.route('/edit/<int:api_id>', methods=['GET', 'POST'])
-@require_login()
+@require_admin()
 def edit(api_id):
     if request.method == 'GET':
         api = Api.query.get(api_id)
@@ -115,13 +116,16 @@ def edit(api_id):
                 update_time=datetime.now()
             )
             api.api_changelog.extend([changelog])
-
+            if str(request.form['notify']).lower() == 'true':
+                users = User.query.filter(User.following_apis.contains(api)).all()
+                for user in users:
+                    user.user_notification.append(changelog)
         db.session.commit()
         return "ok"
 
 
 @bp.route('/delete', methods=['POST'])
-@require_login()
+@require_admin()
 def delete():
     api_id = request.form['api_id']
     api = Api.query.get(api_id)

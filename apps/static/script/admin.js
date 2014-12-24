@@ -1,13 +1,15 @@
 $(function() {
     $("#various1").fancybox({
-
+        'scrolling' : 'no'
     });
     $("#various2").fancybox({
-
+        'scrolling' : 'no'
     });
     $("#various3").fancybox({
-
+        'scrolling' : 'no'
     });
+
+
 
 
     if($.trim($('#edit-params').val())!=""){
@@ -38,33 +40,50 @@ $(function() {
 
 
     c_params = new Array();
-    $('#add_param_btn').click(
-        function () {
-            var name = $('#add_name').val();
-            var must = $('#add_must').prop('checked');
-            var type = $('#add_type').val();
-            var t_default = $('#add_default').val();
-            var description = $('#add_description').val();
-            if ($.trim(name) == "" || $.trim(type) == "" || $.trim(description) == "") {
-                alert("参数不合法！");
-            }
-            else {
-                c_params.push({'name': name, 'must': must, 'type': type, 'default': t_default, 'description': description});
-                //写入页面
-                var tmp = '<tr><td>' + name + '</td>';
-                tmp = tmp + '<td>' + must + '</td>';
-                tmp = tmp + '<td>' + type + '</td>';
-                tmp = tmp + '<td>' + t_default + '</td>';
-                tmp = tmp + '<td>' + description + '</td>';
-                $('#add_tmp_params').append(tmp);
-                //清空变量
-                $('#add_name').val('');
-                $('#add_type').val('');
-                $('#add_default').val('');
-                $('#add_description').val('');
-            }
+    function add_param(){
+        var name = $('#add_name').val();
+        var must = $('#add_must').prop('checked');
+        var type = $('#add_type').val();
+        var t_default = $('#add_default').val();
+        var description = $('#add_description').val();
+        if ($.trim(name) == "" || $.trim(type) == "" || $.trim(description) == "") {
+            alert("参数不合法！");
         }
-    );
+        else {
+            c_params.push({'name': name, 'must': must, 'type': type, 'default': t_default, 'description': description});
+            //写入页面
+            var tmp = '<tr><td>' + name + '</td>';
+            tmp = tmp + '<td>' + must + '</td>';
+            tmp = tmp + '<td>' + type + '</td>';
+            tmp = tmp + '<td>' + t_default + '</td>';
+            tmp = tmp + '<td>' + description + '</td>';
+            $('#add_tmp_params').append(tmp);
+            //清空变量
+            $('#add_name').val('');
+            $('#add_type').val('');
+            $('#add_default').val('');
+            $('#add_description').val('');
+        }
+    };
+
+    $('#add_param_btn').click(function(){
+        add_param();
+    });
+
+    $('#save_and_continue').click(function(){
+        add_param();
+    });
+
+    $('#add_description').on('keypress', function(e){
+        var code = (e.keyCode ? e.keyCode : e.which);
+         if(code == 13) {
+             e.preventDefault();
+             add_param();
+             $('#add_name').focus();
+         }
+    });
+
+
 
     p_del = function(api_id){
         $('#pre-del').html(api_id);
@@ -148,7 +167,8 @@ var preview_json_1 = function () {
                 'auth': $('#add-auth-l').prop('checked'),
                 'params': $.toJSON(c_params),
                 'return': $('#hidden-api-result-2').val(),
-                'notice': $('#add-notice-l').val()
+                'notice': $('#add-notice-l').val(),
+                'test': $('#add-test').val()
             }, function (data) {
                 if (data == "ok") {
                     window.location.href = "/admin";
@@ -191,10 +211,11 @@ edit_api = function(api_id) {
                 'return': $('#edit-result-1').val(),
                 'notice': $('#edit-notice').val(),
                 'changelog': $.trim($('#edit-changelog').val()),
-                'test': $('#edit-test').val()
+                'test': $('#edit-test').val(),
+                'notify': $('#notification').prop('checked')
             }, function (data) {
                 if (data == "ok") {
-                    window.location.href = "/admin";
+                    window.location.href = "/admin#api_" + api_id;
                 }
                 else {
                     alert('未知异常');

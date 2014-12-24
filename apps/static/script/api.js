@@ -14,6 +14,78 @@ catch(e){
 
 
 $(function(){
+    $("#doc-feed-back").fancybox({
+        'scrolling' : 'no'
+    });
+
+    $("#api-feed-back").fancybox({
+        'scrolling' : 'no'
+    });
+
+    $('#doc_feedback_btn').click(function(){
+        if($.trim($('#feedback_content').val()) == ''){
+            $('#err_msg').css('display', 'inline-block');
+            return;
+        }
+        $.ajax({
+            url: '/feedback',
+            data: {'feed_type': 0, 'feed_content': $('#feedback_content').val() },
+            type: 'POST',
+            success:function(data){
+                if(data == 'ok'){
+                    $.fancybox.close();
+                    alert('感谢您的反馈！');
+                }
+            },
+            error:function(data){
+
+            }
+        });
+    });
+
+    $('#api_feedback_btn').click(function(){
+        if($.trim($('#api_url').val())=='' || $.trim($('#feedback_content').val())==''){
+            $('#err_msg').css('display', 'inline-block');
+            return;
+        }
+        $.ajax({
+            url: '/feedback',
+            data: {
+                'feed_type': 1,
+                'api_id': $('#api_id').text(),
+                'api_url': $('#api_url').val(),
+                'feed_content': $('#feedback_content').val()
+            },
+            type: 'POST',
+            success:function(data){
+                if(data == 'ok'){
+                    $.fancybox.close();
+                    alert('感谢您的反馈，我们将及时解决并反馈');
+                }
+            },
+            error:function(data){
+
+            }
+        });
+    });
+
+    url_full = false;
+    $('#full-url').click(function(){
+        if(url_full == false){
+            $(this).text('简短URL');
+            $('#test-param').val($('#test-param').val() + '&version=1.0&format=json&appkey=KtSNKxk3&access_token=changyanyun');
+            $('#test-param').focus().select();
+            url_full = true;
+        }
+        else{
+            $(this).text('完整URL');
+            $('#test-param').val($('#test-param').val().replace('&version=1.0&format=json&appkey=KtSNKxk3&access_token=changyanyun', ''));
+            $('#test-param').focus();
+            url_full = false;
+        }
+
+    });
+
     $('#api-request').click(function(){
         var method = $("#test-format").find("option:selected").text();
         $.ajax({
@@ -53,5 +125,27 @@ $(function(){
             }
             JSONFormatter.format(data.content, {'appendTo' : '.test_return'});
         })*/
+    });
+
+    $('#test-param').on('keypress', function(e){
+        var code = (e.keyCode ? e.keyCode : e.which);
+         if(code == 13) {
+             e.preventDefault();
+             $('#api-request').click();
+         }
+    });
+
+    $(window).scroll(function(){
+        if($(window).scrollTop()>100){
+            $('#api-to-top').fadeIn(500);
+        }
+        else{
+            $('#api-to-top').fadeOut(500);
+        }
+    });
+
+    $('#api-to-top').click(function(){
+        $('body,html').animate({scrollTop:0},400);
+        return false;
     });
 });

@@ -1,6 +1,6 @@
 .hero {
     text-align: center;
-    margin: 6em auto 3em;
+    /*margin: 6em auto 3em;*/
 }
     .hero-titles {
         font-family: "omnes-pro", sans-serif;
@@ -201,7 +201,7 @@ a.pure-button-secondary {
 .pure-button-warning,
 .pure-button-secondary {
     color: white;
-    border-radius: 4px;
+    /*border-radius: 4px;*/
     text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
 }
 
@@ -210,7 +210,7 @@ a.pure-button-secondary {
 }
 
 .pure-button-error {
-    background: rgb(202, 60, 60); /* 这是褐红色 */
+    background: rgb(202, 60, 60); /* 这是褐红�?*/
 }
 
 .pure-button-warning {
@@ -218,7 +218,7 @@ a.pure-button-secondary {
 }
 
 .pure-button-secondary {
-    background: rgb(66, 184, 221); /* 这是浅蓝色 */
+    background: rgb(66, 184, 221); /* 这是浅蓝�?*/
 }
 
 
@@ -251,10 +251,10 @@ a.pure-button-secondary {
 }
 
 .api-list{
-    margin-left: 10%;
+    margin-left: 5%;
     margin-top: 50px;
     margin-bottom: 50px;
-    width: 80%;
+    width: 85%;
     text-align: left;
     font-size: 0.9em;
     color: #333;
@@ -319,18 +319,19 @@ a.pure-button-secondary {
 }
 
 .view .key{
-    margin: 10px 2em 5px 2em;
+    margin: 10px 0.5em 5px 0.5em;
     border-bottom: 1px solid #EEE;
     font-size: 1.2em;
     display: block;
+    padding-bottom: 5px;
 }
 
 .view .value{
-    margin: 0 3em 20px 3em;
+    margin: 0 0.5em 20px 1em;
     font-size: 0.9em;
     color: #000;
     display: block;
-    width: 80%;
+    /*width: 80%;*/
 }
 
 .view .param-list{
@@ -387,4 +388,88 @@ a.pure-button-secondary {
 .view .log{
     margin: 5px 20px 20px 20px;
     display: block;
+}
+
+.intro_title{
+    /*margin-left: 2em;
+    margin-right: 2em;*/
+    font-size: 1.2em;
+}
+
+.intro_content{
+    /*margin-left: 2.8em;
+    margin-right: 2.8em;*/
+    font-size: 1em;
+    line-height: 2em;
+}
+
+.intro_img{
+    clear: both;
+    display: block;
+    margin: auto;
+    margin-top: 5px;
+}
+
+#api-feed-back {
+  cursor: pointer;
+  border: 0px;
+  bottom: 62px;
+  min-width: 40px;
+  height: 28px;
+  width: 90px;
+  margin: 0px;
+  padding: 0px;
+  position: fixed;
+  right: 10px;
+  border-radius: 0;
+  line-height: 16px;
+  color: #fff;
+  background: transparent url(../images/api_feed_back.png) no-repeat scroll;
+  z-index: 899;
+}
+#api-feed-back:hover {
+  background: transparent url(../images/api_feed_back_hover.png) no-repeat scroll;
+}
+
+#doc-feed-back {
+  cursor: pointer;
+  border: 0px;
+  bottom: 62px;
+  min-width: 40px;
+  height: 28px;
+  width: 90px;
+  margin: 0px;
+  padding: 0px;
+  position: fixed;
+  right: 10px;
+  border-radius: 0;
+  line-height: 16px;
+  color: #fff;
+  background: transparent url(../images/doc_feed_back.png) no-repeat scroll;
+  z-index: 899;
+}
+#doc-feed-back:hover {
+  background: transparent url(../images/doc_feed_back_hover.png) no-repeat scroll;
+}
+
+#api-to-top {
+  cursor: pointer;
+  border: 0px;
+  bottom: 20px;
+  min-width: 40px;
+  height: 28px;
+  width: 90px;
+  margin: 0px;
+  padding: 0px;
+  position: fixed;
+  right: 10px;
+  border-radius: 0;
+  line-height: 16px;
+  color: #fff;
+  display: none;
+  background: transparent url(../images/to_top.png) no-repeat scroll;
+  z-index: 899;
+}
+#api-to-top:hover {
+  background: transparent url(../images/to_top_hover.png) no-repeat scroll;
 }

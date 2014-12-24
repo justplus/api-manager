@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block head %}
+    {{ super() }}
+{% endblock %}
+{% block content %}
+    <div>
+        <ul>
+            <li>
+                CyService2.0 Build1001(2014.12.10)
+                <p class="intro_content">
+                    1、框架升级支持多数据源<br/>
+                    2、资源多级目录支持<br/>
+                    3、用户组扩展采用集中化配置<br/>
+                    4、新增微课中心接口<br/>
+                    5、修复ICP没有缩略图等缺陷<br/>
+                </p>
+                <p class="intro_content">
+                    修改接口列表：<br/>
+                    homework.subject.list<br/>
+                    res.resource.list<br/>
+                    res.resource.batch.list<br/>
+                    res.book.list<br/>
+                    <br/>
+                    新增接口列表：<br/>
+                    core.userext.get<br/>
+                    pan.file.microLesson.add<br/>
+                    homework.file.property.get<br/>
+
+                </p>
+            </li>
+
+        </ul>
+    </div>
+{% endblock %}

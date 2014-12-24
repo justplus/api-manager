@@ -75,10 +75,10 @@
         </form>
         </div>
 
-        <span class="key">请求参数 <a href="#add_param_box_e" id="various2">+</a></span>
+        <span class="key">请求参数 <a href="#add_param_box_e" id="various2" style="font-size: 0.7em">+新增</a></span>
         <!--<span class="hidden-params-e" style="display:none;">{{ locals.param_json }}</span>-->
         <span class="value">
-            <textarea id="edit-params" class="pure-u-1" style="height:100px;">{{ locals.param_json }}</textarea>
+            <textarea id="edit-params" class="pure-u-1" style="height:150px;">{{ locals.param_json }}</textarea>
             <!--<table class="param-list pure-u-1" cellpadding="0" cellspacing="0">
                 <thead>
                     <tr>
@@ -131,11 +131,15 @@
             <input id="edit-test" style="width:100%;" type="text" value="{{ locals.api.api_test }}">
         </span>
 
+        <span class="key">是否发送更新通知</span>
+        <span class="value">
+            <input id="notification" name="notification" type="checkbox"> <label for="notification" style="width:auto;margin-right:10px;">是</label>
+        </span>
+
         <span class="value">
             <span class="pure-u-2-5"></span>
             <button onclick="edit_api({{ locals.api.id }});" class="pure-button pure-button-primary">提交</button>
         </span>
-
     </div>
     <script src="{{ url_for('static', filename='script/admin.js') }}"></script>
 {% endblock %}

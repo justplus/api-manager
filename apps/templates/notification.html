@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block head %}
+    {{ super() }}
+{% endblock %}
+{% block content %}
+    <div class="header view-header legal" style="position: relative; height:25px;">
+        <span style="float:left;">我关注的接口更新</span>
+    </div>
+    <div class="pure-u-1">
+        <ul class="notify">
+            {% for notify in locals.notification_list %}
+                {% if notify.UserNotify.read == 0 %}
+                    <li class="unread-notify">
+                        <a class="notify-api-name" href="/{{ notify.Api.id }}"><strong>{{ notify.Api.api_name }}</strong></a><span class="update-label">更新</span><span class="update-time-label">{{ notify.Changelog.update_time }}</span>
+                        <p class="notify-intro">{{ notify.Changelog.log }}
+                        </p>
+                    </li>
+                {% else %}
+                    <li class="read-notify">
+                        <a class="notify-api-name" href="/{{ notify.Api.id }}"><strong>{{ notify.Api.api_name }}</strong></a><span class="update-label">更新</span><span class="update-time-label">{{ notify.Changelog.update_time }}</span>
+                        <p class="notify-intro">{{ notify.Changelog.log }}
+                        </p>
+                    </li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}

@@ -4,6 +4,7 @@ __author__ = 'zhaoliang'
 __email__ = 'zhaoliang@iflytek.com'
 __created__ = '2014/10/11'
 from apps import db
+from datetime import datetime
 
 
 class Api(db.Model):
@@ -17,6 +18,8 @@ class Api(db.Model):
     api_return = db.Column(db.Text)
     api_category = db.Column(db.Integer, db.ForeignKey('category.id'))
     api_test = db.Column(db.String(500))
+    api_view_count = db.Column(db.Integer, default=0)
+    api_collect_count = db.Column(db.Integer, default=0)
     api_params = db.relationship('Param', cascade="all, delete-orphan",
                     passive_deletes=True)
     api_changelog = db.relationship('Changelog', cascade="all, delete-orphan",
@@ -57,3 +60,49 @@ class Changelog(db.Model):
 
     def __repr__(self):
         return '<Changelog %r>' % self.id
+
+
+user_api_table = db.Table('user_apis', db.Model.metadata,
+                          db.Column('id', db.Integer, primary_key=True),
+                          db.Column('user_id', db.Integer, db.ForeignKey('user.id')),
+                          db.Column('api_id', db.Integer, db.ForeignKey('api.id')))
+"""
+user_nitification_table = db.Table('user_notification', db.Model.metadata,
+                          db.Column('id', db.Integer, primary_key=True),
+                          db.Column('user_id', db.Integer, db.ForeignKey('user.id')),
+                          db.Column('changelog_id', db.Integer, db.ForeignKey('changelog.id')),
+                          db.Column('read', db.Integer))
+"""
+
+class User(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    login_name = db.Column(db.String(20), unique=True, nullable=False)
+    password = db.Column(db.String(50), nullable=False)
+    role_name = db.Column(db.String(20), nullable=False, default=u"viewer")
+    following_apis = db.relationship('Api', secondary=user_api_table)
+    #user_notification = db.relationship('Changelog', secondary=user_nitification_table)
+
+    def __repr__(self):
+        return '<User %r>' % self.id
+
+
+class UserNotify(db.Model):
+    __tablename__ = 'user_notification'
+
+    id = db.Column('id', db.Integer, primary_key=True)
+    user_id = db.Column('user_id', db.Integer, db.ForeignKey('user.id'))
+    changelog_id = db.Column('changelog_id', db.Integer, db.ForeignKey('changelog.id'))
+    read = db.Column('read', db.Integer)
+    #changelog = db.relationship(Changelog, backref="memberships")
+    user = db.relationship(User, backref="user_notification")
+
+
+class Feedback(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column('user_id', db.Integer, db.ForeignKey('user.id'))
+    api_id = db.Column(db.Integer, db.ForeignKey('api.id'))
+    api_url = db.Column(db.String(500))
+    feedback_content = db.Column(db.String(500))
+    feedback_type = db.Column(db.Integer, default=1)
+    create_time = db.Column(db.DateTime, default=datetime.now)
+    has_solved = db.Column(db.Integer)

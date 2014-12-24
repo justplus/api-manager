@@ -38,6 +38,10 @@ def register_error_handler(app):
     def page_404(error):
         return render_template("error/404.html"), 404
 
+    @app.errorhandler(405)
+    def page_405(error):
+        return render_template("error/405.html"), 405
+
     @app.errorhandler(500)
     def page_500(error):
         return render_template("error/500.html"), 500
@@ -53,10 +57,53 @@ def register_logger(app):
             '%(asctime)s %(levelname)s: %(message)s [in %(pathname)s:%(lineno)d]'
             )
         )
-        app.logger.setLevel(logging.ERROR)
-        file_handler.setLevel(logging.ERROR)
+        app.logger.setLevel(logging.INFO)
+        file_handler.setLevel(logging.INFO)
         app.logger.addHandler(file_handler)
         app.logger.info('apidoc startup')
 
 db = None
 app = create_app()
+
+#db.init_app(app)
+#from model.api import Api, Param, Category, Changelog
+"""
+from datetime import *
+db.create_all()
+
+category = Category(category_name=u'用户服务')
+db.session.add(category)
+api = Api(
+    api_name='/api?method=core.user.get',
+    api_description=u'获取用户详细信息',
+    api_format='JSON,XML',
+    api_method='GET,POST',
+    api_auth=True,
+    api_notice='',
+    api_return='{"statuscode":"200","data":[{"uid":"xxx","name":"test"}]}',
+    api_category=1
+)
+param = Param(
+    param_name='uid',
+    param_description=u'用户id',
+    param_must=True,
+    param_type='string',
+    param_default=''
+)
+changelog = Changelog(
+    log=u'修复接口缺陷',
+    update_time=datetime.now()
+)
+api.api_params.extend([param])
+api.api_changelog.extend([changelog])
+db.session.add(api)
+db.session.commit()
+"""
+
+"""
+#批量插入类别
+categories = [u'用户', u'班级', u'学校', u'区域', u'资源', u'云盘', u'备课本', u'作业', u'试卷习题']
+db.session.add_all([Category(c) for c in categories])
+db.session.commit()
+"""
+

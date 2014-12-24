@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block head %}
+    {{ super() }}
+{% endblock %}
+{% block content %}
+    <div class="header view-header legal" style="position: relative; height:25px;">
+        <span style="float:left;">收到的接口反馈</span>
+    </div>
+    <div class="pure-u-1">
+        <ul class="notify">
+            {% for feedback in locals.feedback_list %}
+                {% if feedback.Feedback.has_solved == 0 %}
+                    <li class="unread-notify">
+                        <button style="float:right;" onclick="solved({{ feedback.Feedback.id }})" class="pure-button pure-button-primary pure-button-small">提交解决</button>
+                        <a class="notify-api-name" href="/{{ feedback.Api.id }}"><strong>{{ feedback.Api.api_name }}</strong></a><span class="update-label">{{ feedback.User.login_name }}</span><span class="update-time-label">{{ feedback.Feedback.create_time }}</span>
+                        <p class="notify-intro" style="margin-right:100px;"><a href="{{ feedback.Feedback.api_url }}" target="_blank">{{ feedback.Feedback.api_url }}</a><br/><span style="margin-top: 5px;display: inline-block;">{{ feedback.Feedback.feedback_content }}</span>
+                        </p>
+
+                        <!--<input id="solved" name="solved" type="checkbox" > <label for="solved" style="color:red">是否已经解决</label>-->
+                    </li>
+                {% else %}
+                    <li class="read-notify">
+                        <a class="notify-api-name" href="/{{ feedback.Api.id }}"><strong>{{ feedback.Api.api_name }}</strong></a><span class="update-label">{{ feedback.User.login_name }}</span><span class="update-time-label">{{ feedback.Feedback.create_time }}</span>
+                        <p class="notify-intro" style="margin-right:100px;"><a href="{{ feedback.Feedback.api_url }}" target="_blank">{{ feedback.Feedback.api_url }}</a><br/><span style="margin-top: 5px;display: inline-block;">{{ feedback.Feedback.feedback_content }}</span>
+                        </p>
+                    </li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}

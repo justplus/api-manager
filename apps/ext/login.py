@@ -12,8 +12,20 @@ def require_login():
     def next(func):
         @wraps(func)
         def decorator(*args, **kw):
-            if 'logined' not in session:
+            if not session.get('login_name', None):
                 return redirect(url_for('site.login'))
+            return func(*args, **kw)
+        return decorator
+    return next
+
+def require_admin():
+    def next(func):
+        @wraps(func)
+        def decorator(*args, **kw):
+            if not session.get('login_name', None):
+                return redirect(url_for('site.login'))
+            elif not session.get('role_name', None) == 'admin':
+                return redirect(url_for('site.index'))
             return func(*args, **kw)
         return decorator
     return next

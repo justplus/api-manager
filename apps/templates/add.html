@@ -51,22 +51,22 @@
             <fieldset>
                 <div class="pure-control-group">
                     <label for="add_name">字段名称</label>
-                    <input id="add_name" type="text" placeholder="请输入字段名称" style="width: 300px;">
+                    <input id="add_name" type="text" placeholder="请输入字段名称" style="width: 400px;">
                 </div>
 
                 <div class="pure-control-group">
                     <label>必选字段</label>
-                    <input id="add_must" type="checkbox" checked="checked"><label for="add_must" style="width:auto;margin-right:10px;">是</label>
+                    <input id="add_must" type="checkbox"><label for="add_must" style="width:auto;margin-right:10px;">是</label>
                 </div>
 
                 <div class="pure-control-group">
                     <label for="add_type">字段类型</label>
-                    <input id="add_type" type="text" placeholder="请输入字段类型" style="width: 300px;">
+                    <input id="add_type" type="text" placeholder="请输入字段类型" style="width: 400px;">
                 </div>
 
                 <div class="pure-control-group">
                     <label for="add_default">默认值</label>
-                    <input id="add_default" type="text" style="width: 300px;">
+                    <input id="add_default" type="text" style="width: 400px;">
                 </div>
 
                 <div class="pure-control-group">
@@ -74,14 +74,15 @@
                     <input id="add_description" type="text" placeholder="请输入详细的说明" style="width: 400px;">
                 </div>
 
-                <div style="margin-left: 250px; margin-top:20px;">
+                <div style="margin-left: 200px; margin-top:20px;">
                     <a id="add_param_btn" class="pure-button pure-button-primary" href="javascript:void(0)" onclick="$.fancybox.close();">确定</a>
+                    <a id="save_and_continue" style="margin-left: 50px;" class="pure-button pure-button-success" href="javascript:void(0)">保存并继续</a>
                 </div>
             </fieldset>
         </form>
         </div>
 
-        <span class="key">请求参数 <a href="#add_param_box" id="various1">+</a></span>
+        <span class="key">请求参数 <a href="#add_param_box" id="various1" style="font-size: 0.7em;">+新增</a></span>
         <span class="value">
             <table class="param-list pure-u-1 view" cellpadding="0" cellspacing="0">
                 <thead>
@@ -110,6 +111,11 @@
         <span class="key">注意事项</span>
         <span class="value">
             <textarea class="pure-u-1" id="add-notice-l" style="height:100px;" placeholder="支持html,换行使用<br/>"></textarea>
+        </span>
+
+        <span class="key">接口测试地址</span>
+        <span class="value">
+            <input id="add-test" style="width:100%;" type="text">
         </span>
 
         <span class="value">

@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block head %}
+    {{ super() }}
+{% endblock %}
+{% block content %}
+    <div>
+        <p class="intro_title">1. CyService 简介</p>
+        <p class="intro_content">&nbsp;&nbsp;&nbsp;&nbsp;CyService是一套直接面向云加端应用的RESTful 服务接口集合，以Java实现，采用嵌入式Jetty作为Web服务器，SuperDiamond作为集中化配置，MySQL作为业务数据存储数据库，CyCore作为基础存储服务实现各个项目的业务需求。通过Proxy代理服务器（目前大多采用Nginx+lua）为各应用提供服务。其架构图如下图所示。</p>
+        <img class="intro_img" src="{{ url_for('static', filename='images/架构.jpg') }}"></img>
+        <p style="text-align: center;">CyService架构图</p>
+        <p class="intro_content" style="margin-left: 0.5em;">CyService目前主要提供用户、网盘、资源、题库、家校互联等服务，并提供了OAuth2.0相关的安全认证模块。</br>
+        &nbsp;&nbsp;&nbsp;&nbsp;用户服务：提供用户注册、激活、登录、用户信息管理等用户相关服务。<br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;网盘服务：提供用户文件上传、下载、管理、分享等网盘相关服务；备课本创建、编辑、管理服务以及部分特殊用户文件的处理服务（如：为微课视频生成知识图谱、视频目录等）。<br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;资源服务：依托公司现有的丰富教育资源，提供资源上传、查询、获取、推荐等资源相关服务。<br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;题库服务：提供作业布置、查询、获取等作业相关服务以及对公司现有试题资源的查询、获取相关的题库服务。<br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;家校互联服务：为家校互联项目提供相关服务支撑。<br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;OAuth2.0认证服务：为应用CyService的各个项目动态提供access_token并进行安全认证。</p>
+
+
+        <ul class="intro_content">
+            <li>
+                <strong>适用范围</strong><br/>CyService 是一套RESTful接口，支持单点部署和集群部署，集成方式简单灵活、可伸缩性强，适用于为Web平台、桌面平台、移动平台等对端的、业务相关的应用提供服务支撑，并为各种平台提供统一的调用方式，让项目可以专注于自身业务逻辑实现，而无需管理基础数据与结构。CyService可以应各项目的业务需求进行业务订制。
+
+            </li>
+            <li>
+                <strong>负载均衡</strong><br/>在集群部署方式下，CyService采用Nginx对请求进行代理和转发，从而保证了每一个服务请求的访问速度。
+            </li>
+            <li>
+                <strong>安全性</strong><br/>安全认证：CyService使用OAuth2.0协议对用户进行认证授权。<br/>采用Https：CyService即将采用具有安全性的ssl加密传输协议Https来保证数据通信、传输过程中的安全性。
+            </li>
+            <li>
+                <strong>资源共享</strong><br/>通过CyService服务，各应用项目可以方便地共享公司现有的丰富资源，包括试题库，课程资源和用户资源。
+            </li>
+        </ul>
+        <p class="intro_title">2. 典型应用</p>
+        <p class="intro_content">&nbsp;&nbsp;&nbsp;&nbsp;目前，CyService为教师机、iFlyBook、教师助手、班班通、家校互联等产品以及安徽云、粤教云、畅言云等项目和各本地化产品提供用户、网盘、资源、题库服务，并为家校互联项目提供服务支撑。</p>
+
+        <p class="intro_title">3. 版本信息</p>
+        <p class="intro_content">&nbsp;&nbsp;&nbsp;&nbsp;当前版本为0.4-1007，获取地址<a href="file:\\192.168.75.121\教育产品事业部\教学PDT\CyService2.0\CyService2.0_Build1001">\\192.168.75.121\教育产品事业部\教学PDT\CyService2.0\CyService2.0_Build1001</a>。</p>
+        <p class="intro_title">4. 联系我们</p>
+        <p class="intro_content">&nbsp;&nbsp;&nbsp;&nbsp;如果您的项目需要CyService支撑或者使用过程中有任何需要我们帮助的地方，请联系：盛飞国<a href="mailto:fgsheng@iflytek.com">fgsheng@iflytek.com</a>。</p>
+    </div>
+{% endblock %}

@@ -3,17 +3,45 @@
     {{ super() }}
 {% endblock %}
 {% block content %}
-    <div class="header view-header legal">
-        <a href="/">畅言云API文档</a>
+    <div class="header view-header legal" style="position: relative; height:25px;">
+        <span style="float:left;"><a href="/">API文档</a>
         >
         <a href="/#{{ locals.category }}">{{ locals.category }}</a>
         >
-        {{ locals.api.api_name }}
+        {{ locals.api.api_name }}</span>
+        <ul class="fast-go" style="list-style: none; float:right;margin:0;">
+            <li>
+                <a href="#接口描述">接口描述</a>
+            </li>
+            <li>
+                <a href="#支持格式">支持格式</a>
+            </li>
+            <li>
+                <a href="#HTTP请求方式">HTTP请求方式</a>
+            </li>
+            <li>
+                <a href="#是否需要授权">是否需要授权</a>
+            </li>
+            <li>
+                <a href="#返回结果">返回结果</a>
+            </li>
+            <li>
+                <a href="#注意事项">注意事项</a>
+            </li>
+            <li>
+                <a href="#更新日志">更新日志</a>
+            </li>
+            <li>
+                <a href="#接口测试">接口测试</a>
+            </li>
+        </ul>
     </div>
     <div class="pure-u-1 view">
+        <a id="接口描述" class="anchor"></a>
         <span class="key">接口描述</span>
         <span class="value">{{ locals.api.api_description }}</span>
 
+        <a id="支持格式" class="anchor"></a>
         <span class="key">支持格式</span>
         <span class="value">
             {% if 'JSON' in locals.api.api_format %}
@@ -24,6 +52,7 @@
             {% endif %}
         </span>
 
+        <a id="HTTP请求方式" class="anchor"></a>
         <span class="key">HTTP请求方式</span>
         <span class="value">
             {% if 'GET' in locals.api.api_method %}
@@ -34,6 +63,7 @@
             {% endif %}
         </span>
 
+        <a id="是否需要授权" class="anchor"></a>
         <span class="key">是否需要授权</span>
         <span class="value">
             {% if locals.api.api_auth==1 %}是
@@ -41,6 +71,7 @@
             {% endif %}
         </span>
 
+        <a id="请求参数" class="anchor"></a>
         <span class="key">请求参数</span>
         <span class="value">
             <table class="param-list pure-u-1" cellpadding="0" cellspacing="0">
@@ -68,17 +99,20 @@
             </table>
         </span>
 
+        <a id="返回结果" class="anchor"></a>
         <span class="key">返回结果</span>
         <span class="value">
             <span style="display:none" id="hidden-api-result">{{ locals.api.api_return }}</span>
             <pre class="api-result renderjson"></pre>
         </span>
 
+        <a id="注意事项" class="anchor"></a>
         <span class="key">注意事项</span>
         <span class="value">
             {{ locals.api.api_notice|safe  or '无'}}
         </span>
 
+        <a id="更新日志" class="anchor"></a>
         <span class="key">更新日志</span>
         <span class="value">
         {% if locals.api.api_changelog %}
@@ -96,6 +130,7 @@
         {% endif %}
         </span>
 
+        <a id="接口测试" class="anchor"></a>
         <span class="key">接口测试</span>
         <span class="value">
             <form class="pure-form">
@@ -103,11 +138,52 @@
                     <option>GET</option>
                     <option>POST</option>
                 </select>
-                <input id="test-param" class="pure-input-2-3" type="text" value="{{ locals.api.api_test }}">
+                <input id="test-param" class="pure-input-2-3" style="width:75%;" type="text" value="{{ locals.api.api_test }}">
                 <a id="api-request" class="pure-button pure-button-small pure-button-primary">请求</a>
+                <a id="full-url" class="pure-button pure-button-small pure-button-success">完整URL</a>
             </form>
             <pre class="test-result renderjson">暂无请求</pre>
         </span>
     </div>
+
+    <div>
+    {% if not session.get('login_name',None) %}
+        <a id="api-feed-back" href="/login" title="问题反馈" disabled="disabled"></a>
+    {% else %}
+        <a id="api-feed-back" href="#api_feedback" title="问题反馈"></a>
+    {% endif %}
+        <a id="api-to-top" style="display: none;" title="返回顶部" onclick=""></a>
+    </div>
+    <!-- API接口反馈 -->
+    <div id="api_feedback" style="display:none;width:650px;">
+        <form class="pure-form pure-form-aligned pure-u-1">
+            <fieldset>
+                <span id="api_id" style="display: none">{{ locals.api.id }}</span>
+                <div class="pure-control-group">
+                    <label>接口名称</label>
+                    <input type="text" style="width: 400px;" disabled="disabled" value="{{ locals.api.api_name }}">
+                </div>
+
+                <div class="pure-control-group">
+                    <label for="api_url">调用参数</label>
+                    <input id="api_url" type="text" style="width: 400px;" placeholder="复制完整的url">
+                </div>
+
+                <div class="pure-control-group">
+                    <label for="feedback_content">反馈内容</label>
+                    <textarea id="feedback_content" name="feedback_content" type="text" placeholder="详细描述接口异常，包括接口返回的信息" style="width: 400px;height: 130px;"></textarea>
+                </div>
+
+                <div style="margin-left: 300px; margin-top:10px;">
+                    <a id="api_feedback_btn" class="pure-button pure-button-primary pure-button-small" href="javascript:void(0)">确定</a>
+                </div>
+
+                <div class="pure-control-group" style="text-align: center">
+                    <label style="color:red; display:none" id="err_msg">两项均不能为空</label>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+    <script src="{{ url_for('static', filename='components/jquery/jquery.plugin.clipboard.js') }}"></script>
     <script src="{{ url_for('static', filename='script/api.js') }}"></script>
 {% endblock %}

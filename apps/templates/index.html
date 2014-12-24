@@ -5,16 +5,17 @@
 {% block content %}
     <div class="hero">
         <div class="hero-title">
-            <h3>畅言云接口文档</h3>
-            <div class="pure-u-1">
+
+            <!--<div class="pure-u-1">
                 <form class="pure-form">
                     <input id="search-kw" class="pure-input-1-3" type="text" placeholder="接口名称或描述">
                     <a id="search-btn" class="pure-button pure-button-small pure-button-primary">搜索</a>
                 </form>
-            </div>
+            </div>-->
             <div id="search-result" class="pure-u-1">
                 {% for api_category in  locals.api_list %}
-                <table id="{{ api_category.category }}" class="pure-table pure-table-bordered api-list">
+                <a name="{{ api_category.category }}" id="{{ api_category.category }}" class="anchor"></a>
+                <table class="pure-table pure-table-bordered api-list">
                     <tbody>
                         <tr class="header">
                             <td colspan="4">
@@ -22,7 +23,7 @@
                             </td>
                         </tr>
                         {% for api in api_category.apis %}
-                        <tr class="list">
+                        <tr class="list" id="{{ api.api_name }}">
                             <td class="td2">
                                 {% if 'GET' in api.api_method %}
                                 <span class="method-get">GET</span>
@@ -31,9 +32,29 @@
                                 <span class="method-post">POST</span>
                                 {% endif %}
                             </td>
-                            <td class="td3"><a href="/{{ api.id }}">{{ api.api_name }}</a></td>
+                            <td class="td3">
+                                <a href="/{{ api.id }}">{{ api.api_name }}</a>
+                                <!--<img src="{{ url_for('static', filename='images/notification.png') }}" style="margin-top:3px;float:right">-->
+                            </td>
                             <td class="td4">{{ api.api_description }}</td>
-                            <td class="td1"><button class="pure-button pure-button-xsmall pure-button-success">关注</button></td>
+                            <td class="td1" style="text-align: center">
+                            {% if not api.followed%}
+                                <img src="{{ url_for('static', filename='images/uncollect.png') }}" width="20px;" style="cursor: pointer;" title="关注" onclick="follow(this,{% if session['login_name'] %}{{ session['user_id'] }}{% else %}-1{% endif %}, {{ api.id }})">
+                            {% else %}
+                                <img src="{{ url_for('static', filename='images/collect.png') }}" width="20px;" style="cursor: pointer;" title="取消关注" onclick="follow(this,{{ session['user_id'] }}, {{ api.id }})">
+                            {% endif %}
+                            <!--{% if not api.followed%}
+                                <button class="pure-button pure-button-xsmall pure-button-success" style="background: #1f4e7c;width:90px;"
+                                        onclick="follow(this,{% if session['login_name'] %}{{ session['user_id'] }}{% else %}-1{% endif %}, {{ api.id }})">
+                                    + 关注
+                                </button>
+                            {% else %}
+                                <button class="pure-button pure-button-xsmall pure-button-success" style="background: #1cb841;width:90px;"
+                                        onclick="follow(this,{{ session['user_id'] }}, {{ api.id }})">
+                                    取消关注
+                                </button>
+                            {% endif %}-->
+                            </td>
                         </tr>
                         {% endfor %}
                     </tbody>
@@ -42,5 +63,29 @@
             </div>
         </div>
     </div>
+
+    <div>
+        <a id="doc-feed-back" href="#doc_feedback" title="问题反馈" ></a>
+        <a id="api-to-top" style="display: none;" title="返回顶部" onclick=""></a>
+    </div>
+
+    <!-- 文档反馈 -->
+    <div id="doc_feedback" style="display:none;width:450px;">
+        <form class="pure-form pure-form-aligned pure-u-1">
+            <fieldset>
+                <div class="pure-control-group">
+                    <textarea id="feedback_content" type="text" placeholder="请输入您对接口文档的建议和意见" style="width: 450px;height: 130px;"></textarea>
+                </div>
+                <div style="margin-left: 180px; margin-top:10px;">
+                    <a id="doc_feedback_btn" class="pure-button pure-button-primary pure-button-small" href="javascript:void(0)">确定</a>
+                </div>
+                <div class="pure-control-group" style="text-align: center">
+                    <label style="color:red; display:none" id="err_msg">至少写点什么</label>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+
     <script src="{{ url_for('static', filename='script/index.js') }}"></script>
+    <script src="{{ url_for('static', filename='script/api.js') }}"></script>
 {% endblock %}

@@ -18,7 +18,12 @@
             <div class="pure-controls">
                 <a id="login-btn" style="position: relative;left:-20px;" class="pure-button pure-button-small pure-button-success">登录</a>
             </div>
+
+            <div style="margin-top: 40px;margin-left:100px;font-size:0.8em;">
+                还没有账号？前去<a href="/register">注册</a>
+            </div>
         </fieldset>
     </form>
     <script src="{{ url_for('static', filename='script/index.js') }}"></script>
+    <script src="{{ url_for('static', filename='components/jquery/jquery.md5.js') }}"></script>
 {% endblock %}

@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block head %}
+    {{ super() }}
+{% endblock %}
+{% block content %}
+    <div class="hero">
+        <div class="hero-title">
+            <div id="search-result" class="pure-u-1">
+                <table class="pure-table pure-table-bordered api-list">
+                {% for api in  locals.api_list %}
+                    <tbody>
+                        <tr class="list" id="{{ api.api_name }}">
+                            <td class="td2">
+                                {% if 'GET' in api.api_method %}
+                                <span class="method-get">GET</span>
+                                {%  endif %}
+                                {% if 'POST' in api.api_method %}
+                                <span class="method-post">POST</span>
+                                {% endif %}
+                            </td>
+                            <td class="td3">
+                                <a href="/{{ api.id }}">{{ api.api_name }}</a>
+                                <!--<img src="{{ url_for('static', filename='images/notification.png') }}" style="margin-top:3px;float:right">-->
+                            </td>
+                            <td class="td4">{{ api.api_description }}</td>
+                            <td class="td1" style="text-align: center">
+                            {% if not api.followed%}
+                                <img src="{{ url_for('static', filename='images/uncollect.png') }}" width="20px;" style="cursor: pointer;" title="关注" onclick="follow(this,{% if session['login_name'] %}{{ session['user_id'] }}{% else %}-1{% endif %}, {{ api.id }})">
+                            {% else %}
+                                <img src="{{ url_for('static', filename='images/collect.png') }}" width="20px;" style="cursor: pointer;" title="取消关注" onclick="follow(this,{{ session['user_id'] }}, {{ api.id }})">
+                            {% endif %}
+                            </td>
+                        </tr>
+                    </tbody>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
+    <script src="{{ url_for('static', filename='script/index.js') }}"></script>
+    <script src="{{ url_for('static', filename='script/api.js') }}"></script>
+{% endblock %}

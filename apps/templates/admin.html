@@ -19,7 +19,7 @@
                     </td>
                 </tr>
                 {% for api in api_category.apis %}
-                <tr class="list">
+                <tr class="list" id="api_{{ api.id }}">
                     <td class="td2">
                         {% if 'GET' in api.api_method %}
                         <span class="method-get">GET</span>
@@ -30,11 +30,14 @@
                     </td>
                     <td class="td3"><a href="/{{ api.id }}">{{ api.api_name }}</a></td>
                     <td class="td4">{{ api.api_description }}</td>
-                    <td class="td1">
-                        <a class="pure-button pure-button-xsmall pure-button-success" href="/admin/edit/{{ api.id }}" style="color:#fff;">编辑</a>
-                        <!--<a class="pure-button pure-button-xsmall pure-button-error" href="/admin/delete/{{ api.id }}" style="color:#fff;">删除</a>-->
+                    <td class="td1" style="text-align: center">
+                        <span id="pre-del" style="display:none;"></span>
+                        <a href="/admin/edit/{{ api.id }}" title="编辑" style="margin-right: 5px"><img src="{{ url_for('static', filename='images/edit.png') }}" width="16px"></a>
+                        <a onclick="p_del({{ api.id }})" title="删除" href="#del_box" id="various3"><img src="{{ url_for('static', filename='images/delete.png') }}" width="16px"></a>
+                        <!--<a class="pure-button pure-button-xsmall pure-button-success" href="/admin/edit/{{ api.id }}" style="color:#fff;">编辑</a>
                         <span id="pre-del" style="display:none;"></span>
                         <a onclick="p_del({{ api.id }})" class="pure-button pure-button-xsmall pure-button-error" style="color:#fff;" href="#del_box" id="various3">删除</a>
+                        -->
                     </td>
                 </tr>
                 {% endfor %}

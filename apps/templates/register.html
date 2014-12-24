@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block head %}
+    {{ super() }}
+{% endblock %}
+{% block content %}
+    <form class="pure-form pure-form-aligned" style="margin:200px auto 250px auto;text-align:center;">
+        <fieldset>
+            <div class="pure-control-group">
+                <label for="name">用户名</label>
+                <input id="name" type="text" class="pure-u-1-4" placeholder="请使用域账号">
+            </div>
+
+            <div class="pure-control-group">
+                <label for="password">密码</label>
+                <input id="password" type="password" class="pure-u-1-4" placeholder="随便来点什么">
+            </div>
+
+            <div class="pure-controls">
+                <a id="register-btn" style="position: relative;left:-20px;" class="pure-button pure-button-small pure-button-success">注册</a>
+            </div>
+
+            <div style="margin-top: 40px;margin-left:100px;font-size:0.8em;">
+                已有账号？前去<a href="/login">登录</a><br/>接口开发者和测试者联系zhaoliang@iflytek.com注册<br/>
+            </div>
+
+        </fieldset>
+    </form>
+    <script src="{{ url_for('static', filename='components/jquery/jquery.md5.js') }}"></script>
+    <script src="{{ url_for('static', filename='script/index.js') }}"></script>
+{% endblock %}

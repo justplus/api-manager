@@ -222,7 +222,7 @@
 }
 
 .fancybox-title-float-wrap .child {
-	display: inline-block;
+	display: none;
 	margin-right: -100%;
 	padding: 2px 20px;
 	background: transparent; /* Fallback for web browsers that doesn't support RGBa */

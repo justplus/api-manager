@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+{% block head %}
+    {{ super() }}
+{% endblock %}
+{% block content %}
+    <div>
+        <p class="intro_title">1. CyService接口调用说明</p>
+        <p class="intro_content">1. CyService接口调用方式</p>
+        <div style="padding-left: 30px;">
+            <p class="intro_content"><strong>(1) 获取Oauth2认证授权</strong></p>
+            <p class="intro_content">&nbsp;&nbsp;&nbsp;&nbsp;Oauth2认证授权是根据AppKey动态获取access_token的过程。appkey是发起服务请求用户的标识（如果没有，请联系CyService分配），access_token是动态生成的与AppKey相应的token。它的获取根据grant_type的不同分为两种方式：user级别（需要用户名和密码）和client级别。下面分别给出这两种方式获取access_token的说明及参考:</p>
+            <ul>
+
+            <li>user级别</span></br>
+            入参为client_id(即AppKey)、client_secret(该AppKey对应的client_secret)、username(用户名)、password(用户密码)，指定grant_type= password。如：</br>
+            <a style="font-size: 0.9em;" href="http://172.16.95.26/oauth/token?client_id=***&client_secret=***&grant_type=password&username=***&password=***">http://172.16.95.26/oauth/token?client_id=***&client_secret=***&grant_type=password&username=***&password=***</a></br>
+            </li>
+            <li>client级别</span></br>
+            入参为client_id（即AppKey）、client_secret（该AppKey对应的client_secret），指定grant_type= client_credentials。如：</br>
+            <a style="font-size: 0.9em;" href="http://172.16.95.26/oauth/token?client_id=***&client_secret=***&grant_type=client_credentials">http://172.16.95.26/oauth/token?client_id=***&client_secret=***&grant_type=client_credentials</a>
+            </li></ul>
+        <p class="intro_content"><strong>(2) 根据access_token请求服务</strong></p>
+            <p class="intro_content">请求参数如下：</p>
+            <table class="pure-table pure-table-bordered intro_content">
+                <thead>
+                    <tr>
+                        <td>参数名称</td>
+                        <td>含义</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>method</td>
+                        <td>接口名称</td>
+                    </tr>
+                    <tr>
+                        <td>format</td>
+                        <td>返回值格式(json|xml)</td>
+                    </tr>
+                    <tr>
+                        <td>version</td>
+                        <td>服务版本号(1.0)</td>
+                    </tr>
+                    <tr>
+                        <td>appkey</td>
+                        <td>发起服务请求用户的标识</td>
+                    </tr>
+                    <tr>
+                        <td>access_token</td>
+                        <td>上一步获取的access_token</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <p class="intro_content">2. CyService文档说明地址为：<a href="http://172.16.95.26/doc">http://172.16.95.26/doc</a>，可以点击相应的接口查看详细说明。在详细说明页面的最下方，有“接口测试”，按需修改地址栏中的url地址后，点击“请求”按钮，即可在下方查看请求结果。</p>
+        <p class="intro_content">3. 示例</p>
+        <p class="intro_content">以获取用户基本信息为例:</br>
+        <a style="font-size: 0.9em;" href="http://172.16.95.26/api?method=core.user.get&format=json&version=1.0&loacal=zh_CN&appkey=***&access_token=***&key=loginName&value=zhangsan">http://172.16.95.26/api?method=core.user.get&format=json&version=1.0&loacal=zh_CN&appkey=***&access_token=***&key=loginName&value=zhangsan</a></p>
+
+        <p class="intro_title">2. CyService部署流程说明</p>
+        <p class="intro_content">0. 准备工作</p>
+        <ul class="intro_content">
+            <li>安装一些必要的软件如svn，maven等等。</li>
+            <li>从SVN中获取各个模块代码：目前有cloud-parent(服务基础pom)、cloud-service-frame(服务框架)、cloud-oauth2-server(oauth认证服务)、cloud-service-core(用户服务)、cloud-service-homework(题库以及作业服务)、cloud-service-pan(云盘服务)、cloud-service-res(资源服务)、cloud-service-mobile(移动端服务支持)。</li>
+            <li>配置hosts文件。以win7平台为例，在C:\Windows\System32\drivers\etc\hosts文件最后添加"172.16.79.21 repos.iflytek.com"；Linux平台在/etc/hosts文件最后添加"172.16.79.21 repos.iflytek.com"。</li>
+        </ul>
+        <p class="intro_content">1. 获取Jar包，将服务模块打包</p>
+        <ul class="intro_content">
+            <li>依次切换到cloud-parent和cloud-service-frame所在路径，运行mvn clean install，将所需Jar从maven仓库下载到本地。以win7平台为例，会将所需Jar包下载至C:\Users\Administrator\.m2；Linux平台会下载至/root/.m2中。</li>
+            <li>按需切换到cloud-oauth2-server、cloud-service-core、cloud-service-homework、cloud-service-pan、cloud-service-res、cloud-service-mobile所在路径，运行mvn clean install assembly:single命令进行打包。完成后，会在/target文件夹下生成相应的包文件，如cloud-service-res-0.4.0-SNAPSHOT-bin.tar.gz。将该包解压。</li>
+        </ul>
+        <p class="intro_content">2. 服务配置</p>
+        <ul class="intro_content">
+            <li>将上一步解压得到的文件夹，如..\cloud-service-res\target\cloud-service-res-0.4.0-SNAPSHOT-bin\cloud-service-res-0.4.0-SNAPSHOT完整拷贝到服务器。</li>
+            <li>配置运行环境。按需修改\bin\env.sh中第25行：export SUPERDIAMOND_PROFILE=development，可以按需配置为development、test、build、production。依次对应开发、测试(逐步废弃)、构建(逐步更改为CyService的开发环境)、生产环境。</li>
+            <li>配置Superdiamond环境。按需修改\bin\env.sh中第28行：BASE_APP_ARGS="-Dsuperdiamond.host=172.16.79.21 -Dsuperdiamond.port=8283 -Dsuperdiamond.projcode=cloud-service"，例如配置畅言云为"-Dsuperdiamond.projcode=cloud-service",安徽云为"-Dsuperdiamond.projcode=cloud-service-anhui"等等。</li>
+        </ul>
+        <p class="intro_content">3. 启停服务</p>
+        <ul class="intro_content">
+            <li>进入各个模块bin文件夹所在路径，运行sh server.sh start启动服务或者sh server.sh stop停止服务。</li>
+        </ul>
+    </div>
+{% endblock %}
