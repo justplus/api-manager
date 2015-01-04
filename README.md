@@ -14,6 +14,7 @@ API文档管理工具：
 ```python
 pip install requests Flask Flask-SQLAlchemy Flask-Script
 ```
+或运行setup.py
 
 - 修改数据库配置config.py
 
