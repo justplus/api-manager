@@ -12,7 +12,7 @@ API文档管理工具：
 ===============
 - 安装python及相关类库
 ```python
-pip install requests, Flask, Flask-SQLAlchemy, Flask-Script
+pip install requests Flask Flask-SQLAlchemy Flask-Script
 ```
 
 - 修改数据库配置config.py
