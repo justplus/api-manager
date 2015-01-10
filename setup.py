@@ -11,6 +11,8 @@ setup(
         'Flask',
         'Flask-SQLAlchemy',
         'Flask-Script',
-        'requests'
+        'requests',
+        'gunicorn',
+        'gevent'
     ]
 )

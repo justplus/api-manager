@@ -12,7 +12,7 @@ API文档管理工具：
 ===============
 - 安装python及相关类库(或运行setup.py)
 ```python
-pip install requests Flask Flask-SQLAlchemy Flask-Script
+pip install requests Flask Flask-SQLAlchemy Flask-Script gunicorn gevent
 ```
 
 - 修改数据库配置config.py
@@ -23,11 +23,12 @@ pip install requests Flask Flask-SQLAlchemy Flask-Script
 
 - 服务器部署
 
-请确保已经安装了nginx以及uwsgi
 ```
 cd /usr/local/api_doc(请cd到工程目录)
-uwsgi -s /tmp/uwsgi.sock -p 8 -w runserver:app --daemonize /usr/local/nginx/logs/error.log
+gunicorn -c unicorn.py runserver:app
 ```
+
+- 如果你打算使用nginx
 
 nginx可做如下设置：
 ```

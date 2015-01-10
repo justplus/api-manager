@@ -63,7 +63,6 @@ def register_logger(app):
         app.logger.info('apidoc startup')
 
 db = None
-app = create_app()
 
 #db.init_app(app)
 #from model.api import Api, Param, Category, Changelog
