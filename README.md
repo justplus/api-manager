@@ -25,7 +25,7 @@ pip install requests Flask Flask-SQLAlchemy Flask-Script gunicorn gevent
 
 ```
 cd /usr/local/api_doc(请cd到工程目录)
-gunicorn -c unicorn.py runserver:app
+gunicorn -c unicorn.py runserver:app --daemon
 ```
 
 - 如果你打算使用nginx
