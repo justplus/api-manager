@@ -13,6 +13,7 @@ setup(
         'Flask-Script',
         'requests',
         'gunicorn',
-        'gevent'
+        'gevent',
+        'MySQL-python'
     ]
 )

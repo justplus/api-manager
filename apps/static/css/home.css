@@ -269,8 +269,8 @@ a.pure-button-secondary {
 
 .api-list td{
     text-overflow: ellipsis;
-    white-space: nowrap;
     overflow: hidden;
+    word-break: break-all;
 }
 
 .td2{

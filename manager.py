@@ -11,12 +11,12 @@ manager.add_command("runserver", Server('0.0.0.0', port=5000))
 
 @manager.command
 def create_all():
-    "Creates database tables"
+    """Creates database tables"""
     db.create_all()
 
 @manager.command
 def drop_all():
-    "Drops all database tables"
+    """Drops all database tables"""
     if prompt_bool("Are you sure ? You will lose all your data !"):
         db.drop_all()
 
