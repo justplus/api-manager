@@ -26,7 +26,7 @@ API文档管理工具：
 
 ``` 
 cd /usr/local/api_doc(请cd到工程目录)
-gunicorn -c unicorn.py runserver:app
+gunicorn -c unicorn.py runserver:app --daemon
 ```
 
 - 如果你打算使用nginx
