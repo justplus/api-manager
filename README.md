@@ -8,6 +8,14 @@ API文档管理工具：
 
 工程基于flask，前端基于pure framework
 
+# 项目截图
+
+![添加接口](https://github.com/justplus/api-doc-manager/blob/master/screenShots/add.png)
+
+![接口详情](https://github.com/justplus/api-doc-manager/blob/master/screenShots/detail.png)
+
+![首页](https://github.com/justplus/api-doc-manager/blob/master/screenShots/index.png)
+
 # 使用方式
 
 - 安装python及相关类库(或运行setup.py)
