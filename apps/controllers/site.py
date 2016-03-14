@@ -214,7 +214,7 @@ def logout():
     return redirect(url_for('site.index'))
 
 
-@bp.route('/register', methods=['GET', 'POST'])
+@bp.route('/rlegister', methods=['GET', 'POST'])
 def register():
     if request.method == 'GET':
         if session.get('login_name', None):
@@ -241,3 +241,7 @@ def register():
         except Exception, ex:
             print str(ex)
             return "wrong"
+
+
+def __del__(self):
+    db.session.close()

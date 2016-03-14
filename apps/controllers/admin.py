@@ -132,3 +132,7 @@ def delete():
     db.session.delete(api)
     db.session.commit()
     return "ok"
+
+
+def __del__(self):
+    db.session.close()
